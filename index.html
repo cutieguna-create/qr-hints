@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR 힌트</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;min-height:100dvh;background:#514779;color:#fff;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;display:flex;align-items:center;justify-content:center;padding:28px}
+main{width:100%;max-width:800px}h1{text-align:center;font-size:clamp(25px,4vw,40px);margin:0 0 34px;line-height:1.4}.card{background:#f7f5fc;color:#29243a;border-radius:10px;padding:clamp(25px,5vw,48px)}.label{font-size:16px;color:#655c7b;margin:0 0 18px}.hint{font-size:clamp(23px,4vw,36px);line-height:1.7;word-break:keep-all;margin:0}.links{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.links a{display:block;padding:22px;background:#f7f5fc;color:#29243a;text-align:center;border-radius:8px;text-decoration:none;font-size:22px}.note{text-align:center;line-height:1.7;margin-top:24px;color:#eee8ff}[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+<section id="menu"><h1>QR 힌트 미리보기</h1><div class="links"><a href="#1">첫 번째 힌트</a><a href="#2">두 번째 힌트</a><a href="#3">세 번째 힌트</a><a href="#4">네 번째 힌트</a><a href="#5">다섯 번째 힌트</a><a href="#6">여섯 번째 힌트</a></div><p class="note">힌트를 선택하면 학생용 화면을 확인할 수 있습니다.</p></section>
+<section id="view" hidden aria-live="polite"><h1 id="title"></h1><div class="card"><p class="label">텍스트</p><p class="hint" id="hint"></p></div></section>
+</main>
+<script>
+const hints = [
+  '스마트폰을 안전하게 사용하기 위해 필요해.',
+  '다른 사람이 알면 위험할 수 있어.',
+  '숫자나 문자로 만들 수 있어.',
+  '로그인할 때 입력하기도 해.',
+  '다른 사람에게 알려주지 않는 것이 좋아.',
+  '내 계정을 보호하기 위해 사용하는 비밀 문자나 숫자야.'
+];
+const titles = ['첫 번째 힌트!', '두 번째 힌트!', '세 번째 힌트!', '네 번째 힌트!', '다섯 번째 힌트!', '여섯 번째 힌트!'];
+function showHint() {
+  const raw = location.hash.slice(1);
+  const valid = /^[1-6]$/.test(raw);
+  document.getElementById('menu').hidden = valid;
+  document.getElementById('view').hidden = !valid;
+  if (valid) {
+    const index = Number(raw) - 1;
+    document.getElementById('title').textContent = titles[index];
+    document.getElementById('hint').textContent = hints[index];
+    document.title = titles[index];
+  } else {
+    document.title = 'QR 힌트';
+  }
+}
+window.addEventListener('hashchange', showHint);
+showHint();
+</script>
+</body>
+</html>
